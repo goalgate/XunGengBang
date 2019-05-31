@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/index_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:id="@+id/tv_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14px"
+            android:textColor="#ee5656"
+            android:gravity="end"
+            android:text="● 消息未上传"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="119dp"
+        android:textSize="16px"
+        android:gravity="center"
+        android:textColor="#737373" />
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_littleWhite"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="小白灯" />-->
+
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_blue"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="蓝灯" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_yellow"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="黄灯" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_red"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="红灯" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_green"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="绿灯" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_grblue"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="蓝绿灯" />-->
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:id="@+id/btn_BigWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/dd" />
+
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_user" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:text="请将巡更棒靠近巡更点处进行巡更操作"
+        android:textColor="#a6a6a6"
+        android:textSize="14px" />
+
+</LinearLayout>
