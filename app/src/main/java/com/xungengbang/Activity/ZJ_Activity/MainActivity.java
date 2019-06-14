@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.xungengbang.Activity.BaseActivity;
@@ -105,14 +108,18 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_BigWhite)
     void btn_BigWhite() {
-        status = !status;
-        if (status) {
-            btn_BigWhite.setBackground(getDrawable(R.drawable.dd_1));
-        } else {
-            btn_BigWhite.setBackground(getDrawable(R.drawable.dd));
-
+        try{
+            status = !status;
+            if (status) {
+                btn_BigWhite.setBackground(getDrawable(R.drawable.dd_1));
+            } else {
+                btn_BigWhite.setBackground(getDrawable(R.drawable.dd));
+            }
+            light.Bigwhite(status);
+        }catch (Exception e){
+            ToastUtils.showLong(e.toString());
         }
-        light.Bigwhite(status);
+
     }
 
 //    @OnClick(R.id.btn_littleWhite)
@@ -243,8 +250,17 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_change)
     void add() {
-        ActivityUtils.startActivity(getPackageName(), getPackageName() + ".Activity.LoginActivity");
-        finish();
+        new AlertView("是否退出", null, "取消", new String[]{"确定"}, null, MainActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object o, int position) {
+                if (position == 0) {
+                    light.Bigwhite(false);
+                    ActivityUtils.startActivity(getPackageName(), getPackageName() + ".Activity.LoginActivity");
+                    finish();
+                }
+            }
+        }).show();
+
     }
 
 
@@ -279,10 +295,15 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 //        id = getIntent().getExtras().getString("id");
 //        pID = getIntent().getExtras().getString("pID");
-        pName = getIntent().getExtras().getString("userRealName");
-        token = getIntent().getExtras().getString("token");
-        tv_user.setText(pName + ",欢迎您！");
-        reUpload();
+        try {
+            pName = getIntent().getExtras().getString("userRealName");
+            token = getIntent().getExtras().getString("token");
+            tv_user.setText(pName + ",欢迎您！");
+            reUpload();
+        }catch (Exception e){
+            ToastUtils.showLong(e.toString());
+        }
+
 
     }
 
@@ -312,104 +333,111 @@ public class MainActivity extends BaseActivity {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (Exception e){
+                ToastUtils.showLong(e.toString());
             }
         }
     }
 
 
     public void upData(final String jsonData) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData);
-        RetrofitGenerator.getTestApi().updata(token, body)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MyObserver<ResponseBody>(this) {
+        try {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData);
+            RetrofitGenerator.getTestApi().updata(token, body)
+                    .subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new MyObserver<ResponseBody>(this) {
 
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            JSONObject jsonData = new JSONObject(responseBody.string());
-                            if (jsonData.getString("code") == "0") {
-                                tv_info.setText(jsonData.getString("info"));
-                                light.red(true);
-                                Observable.timer(1, TimeUnit.SECONDS)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Consumer<Long>() {
-                                            @Override
-                                            public void accept(Long aLong) throws Exception {
-                                                light.red(false);
-                                                Observable.timer(1, TimeUnit.SECONDS)
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(new Consumer<Long>() {
-                                                            @Override
-                                                            public void accept(Long aLong) throws Exception {
-                                                                light.Bigwhite(status);
-                                                            }
-                                                        });
-                                            }
-                                        });
-                            } else if (jsonData.getString("code") == "1") {
-                                light.green(true);
-                                Observable.timer(1, TimeUnit.SECONDS)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Consumer<Long>() {
-                                            @Override
-                                            public void accept(Long aLong) throws Exception {
-                                                light.green(false);
-                                                Observable.timer(1, TimeUnit.SECONDS)
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(new Consumer<Long>() {
-                                                            @Override
-                                                            public void accept(Long aLong) throws Exception {
-                                                                light.Bigwhite(status);
-                                                            }
-                                                        });
-                                            }
-                                        });
-                                tv_info.setText("巡更成功");
+                        @Override
+                        public void onNext(ResponseBody responseBody) {
+                            try {
+                                JSONObject jsonData = new JSONObject(responseBody.string());
+                                if (jsonData.getString("code") == "0") {
+                                    tv_info.setText(jsonData.getString("info"));
+                                    light.red(true);
+                                    Observable.timer(1, TimeUnit.SECONDS)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Consumer<Long>() {
+                                                @Override
+                                                public void accept(Long aLong) throws Exception {
+                                                    light.red(false);
+                                                    Observable.timer(1, TimeUnit.SECONDS)
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe(new Consumer<Long>() {
+                                                                @Override
+                                                                public void accept(Long aLong) throws Exception {
+                                                                    light.Bigwhite(status);
+                                                                }
+                                                            });
+                                                }
+                                            });
+                                } else if (jsonData.getString("code") == "1") {
+                                    light.green(true);
+                                    Observable.timer(1, TimeUnit.SECONDS)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Consumer<Long>() {
+                                                @Override
+                                                public void accept(Long aLong) throws Exception {
+                                                    light.green(false);
+                                                    Observable.timer(1, TimeUnit.SECONDS)
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe(new Consumer<Long>() {
+                                                                @Override
+                                                                public void accept(Long aLong) throws Exception {
+                                                                    light.Bigwhite(status);
+                                                                }
+                                                            });
+                                                }
+                                            });
+                                    tv_info.setText("巡更成功");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
-                    }
 
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        light.red(true);
-                        Observable.timer(1, TimeUnit.SECONDS)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<Long>() {
-                                    @Override
-                                    public void accept(Long aLong) throws Exception {
-                                        light.red(false);
-                                        Observable.timer(1, TimeUnit.SECONDS)
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Consumer<Long>() {
-                                                    @Override
-                                                    public void accept(Long aLong) throws Exception {
-                                                        light.Bigwhite(status);
-                                                    }
-                                                });
-                                    }
-                                });
-                        daoSession.insert(new ReUploadBean(null, "upData", jsonData));
-                        tv_upload.setVisibility(View.VISIBLE);
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                        List<ReUploadBean> list = reUploadBeanDao.queryBuilder().list();
-                        if (list.size() > 0) {
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            light.red(true);
+                            Observable.timer(1, TimeUnit.SECONDS)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Consumer<Long>() {
+                                        @Override
+                                        public void accept(Long aLong) throws Exception {
+                                            light.red(false);
+                                            Observable.timer(1, TimeUnit.SECONDS)
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(new Consumer<Long>() {
+                                                        @Override
+                                                        public void accept(Long aLong) throws Exception {
+                                                            light.Bigwhite(status);
+                                                        }
+                                                    });
+                                        }
+                                    });
+                            daoSession.insert(new ReUploadBean(null, "upData", jsonData));
                             tv_upload.setVisibility(View.VISIBLE);
+
                         }
-                    }
-                });
+
+                        @Override
+                        public void onComplete() {
+                            super.onComplete();
+                            List<ReUploadBean> list = reUploadBeanDao.queryBuilder().list();
+                            if (list.size() > 0) {
+                                tv_upload.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+        }catch (Exception e){
+            ToastUtils.showLong(e.toString());
+        }
+
     }
 
 
@@ -423,7 +451,7 @@ public class MainActivity extends BaseActivity {
                         List<ReUploadBean> list = reUploadBeanDao.queryBuilder().list();
                         for (final ReUploadBean bean : list) {
                             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), bean.getContent());
-                            RetrofitGenerator.getConnectApi().updata(token, body)
+                            RetrofitGenerator.getTestApi().updata(token, body)
                                     .subscribeOn(Schedulers.single())
                                     .unsubscribeOn(Schedulers.single())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -456,6 +484,12 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                 });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 }

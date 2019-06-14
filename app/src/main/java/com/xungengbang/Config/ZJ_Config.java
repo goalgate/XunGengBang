@@ -3,7 +3,7 @@ package com.xungengbang.Config;
 public class ZJ_Config extends BaseConfig{
     @Override
     public String getServerId() {
-        return "http://1i713e1305.imwork.net:23728/";
+        return "http://192.168.11.131:9001/";
     }
 
     @Override

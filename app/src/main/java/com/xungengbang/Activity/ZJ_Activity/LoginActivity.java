@@ -4,11 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.xungengbang.Activity.BaseActivity;
@@ -18,10 +20,12 @@ import com.xungengbang.R;
 import com.xungengbang.Tool.Alarm;
 import com.xungengbang.Tool.MD5;
 import com.xungengbang.Tool.MyObserver;
+import com.xungengbang.Tool.ServerConnectionUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,6 +41,7 @@ import okhttp3.ResponseBody;
 public class LoginActivity extends BaseActivity {
 
     SPUtils config = SPUtils.getInstance("config");
+
 
     String[] permissions = new String[]{
             Manifest.permission.CAMERA,
@@ -77,8 +82,9 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        et_username.setText("yydw");
-        et_password.setText("88888");
+//        et_username.setText("yydw");
+//        et_password.setText("88888");
+        autoUpdate();
         requestRunPermisssion(permissions, new PermissionListener() {
             @Override
             public void onGranted() {
@@ -91,7 +97,18 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
+    private void autoUpdate() {
+        new ServerConnectionUtil().download("http://124.172.232.89:8050/daServer/updateADA.do?ver=" + AppUtils.getAppVersionName() + "&daid=" + config.getString("daid"), new ServerConnectionUtil.Callback() {
+            @Override
+            public void onResponse(String response) {
+                if (response != null) {
+                    if (response.equals("true")) {
+                        AppUtils.installApp(new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "Download" + File.separator + "app-release.apk"), "application/vnd.android.package-archive");
+                    }
+                }
+            }
+        });
+    }
 
 
     public void login(String jsonData) {
