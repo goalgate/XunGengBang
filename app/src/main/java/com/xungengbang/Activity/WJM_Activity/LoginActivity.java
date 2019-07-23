@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        et_username.setText("yydw");
+        et_username.setText("ceshiabc");
         et_password.setText("88888");
         requestRunPermisssion(permissions, new PermissionListener() {
             @Override
@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity {
                                 JSONObject data = new JSONObject(jsonData.getString("data"));
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", data.getString("token"));
-                                bundle.putString("userRealName", data.getString("userRealName"));
+//                                bundle.putString("userRealName", data.getString("userRealName"));
                                 ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity");
                             } else if (jsonData.getString("code") == "2") {
                                 ToastUtils.showLong(jsonData.getString("info"));

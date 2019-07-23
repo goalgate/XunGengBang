@@ -14,12 +14,14 @@ import android.support.v4.content.ContextCompat;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.trello.rxlifecycle2.components.RxActivity;
+import com.xungengbang.Camera.mvp.module.IPhotoModule;
+import com.xungengbang.Camera.mvp.view.IPhotoView;
 import com.xungengbang.Tool.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseActivity extends RxActivity {
+public class BaseActivity extends RxActivity  {
 
     private PermissionListener mListener;
 

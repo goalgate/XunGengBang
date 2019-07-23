@@ -1,10 +1,14 @@
 package com.xungengbang.Activity.WJM_Activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.location.Location;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,9 +21,13 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.xungengbang.Activity.BaseActivity;
 import com.xungengbang.AppInit;
 import com.xungengbang.Bean.ReUploadBean;
+import com.xungengbang.Camera.mvp.presenter.PhotoPresenter;
+import com.xungengbang.Camera.mvp.view.IPhotoView;
 import com.xungengbang.Connect.RetrofitGenerator;
 import com.xungengbang.Light.presenter.LightPresenter;
 import com.xungengbang.R;
+import com.xungengbang.Tool.FileUtils;
+import com.xungengbang.Tool.LocationTool;
 import com.xungengbang.Tool.MyObserver;
 import com.xungengbang.greendao.DaoSession;
 import com.xungengbang.greendao.ReUploadBeanDao;
@@ -52,7 +60,7 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IPhotoView {
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -60,9 +68,11 @@ public class MainActivity extends BaseActivity {
 
     LightPresenter light = LightPresenter.getInstance();
 
+    PhotoPresenter pp = PhotoPresenter.getInstance();
+
     SPUtils config = SPUtils.getInstance("config");
 
-    String pName = "宁志锦";
+    String pName = "支冉";
 
     String token;
 
@@ -73,6 +83,8 @@ public class MainActivity extends BaseActivity {
     ReUploadBeanDao reUploadBeanDao = daoSession.getReUploadBeanDao();
 
     Disposable disposableTips;
+
+    Location mlocation;
 
     @BindView(R.id.tv_user)
     TextView tv_user;
@@ -86,27 +98,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.btn_BigWhite)
     Button btn_BigWhite;
 
-//    @BindView(R.id.btn_littleWhite)
-//    Button btn_littleWhite;
-//
-//    @BindView(R.id.btn_blue)
-//    Button btn_blue;
-//
-//
-//    @BindView(R.id.btn_yellow)
-//    Button btn_yellow;
-//
-//
-//    @BindView(R.id.btn_grblue)
-//    Button btn_grblue;
-//
-//
-//    @BindView(R.id.btn_red)
-//    Button btn_red;
-//
-//    @BindView(R.id.btn_green)
-//    Button btn_green;
-
+    @BindView(R.id.surfaceView)
+    SurfaceView surfaceView;
 
     @OnClick(R.id.btn_BigWhite)
     void btn_BigWhite() {
@@ -119,132 +112,6 @@ public class MainActivity extends BaseActivity {
         }
         light.Bigwhite(status);
     }
-
-//    @OnClick(R.id.btn_littleWhite)
-//    void btn_littleWhite() {
-//        status = !status;
-//        if (status) {
-//            btn_BigWhite.setClickable(false);
-//            btn_blue.setClickable(false);
-//            btn_yellow.setClickable(false);
-//            btn_grblue.setClickable(false);
-//            btn_red.setClickable(false);
-//            btn_green.setClickable(false);
-//        }else{
-//            btn_BigWhite.setClickable(true);
-//            btn_blue.setClickable(true);
-//            btn_yellow.setClickable(true);
-//            btn_grblue.setClickable(true);
-//            btn_red.setClickable(true);
-//            btn_green.setClickable(true);
-//        }
-//        light.white(status);
-//    }
-//
-//    @OnClick(R.id.btn_blue)
-//    void btn_blue() {
-//        status = !status;
-//        if (status) {
-//            btn_littleWhite.setClickable(false);
-//            btn_BigWhite.setClickable(false);
-//            btn_yellow.setClickable(false);
-//            btn_grblue.setClickable(false);
-//            btn_red.setClickable(false);
-//            btn_green.setClickable(false);
-//        }else{
-//            btn_littleWhite.setClickable(true);
-//            btn_BigWhite.setClickable(true);
-//            btn_yellow.setClickable(true);
-//            btn_grblue.setClickable(true);
-//            btn_red.setClickable(true);
-//            btn_green.setClickable(true);
-//        }
-//        light.blue(status);
-//    }
-//
-//    @OnClick(R.id.btn_yellow)
-//    void btn_yellow() {
-//        status = !status;
-//        if (status) {
-//            btn_littleWhite.setClickable(false);
-//            btn_blue.setClickable(false);
-//            btn_BigWhite.setClickable(false);
-//            btn_grblue.setClickable(false);
-//            btn_red.setClickable(false);
-//            btn_green.setClickable(false);
-//        }else{
-//            btn_littleWhite.setClickable(true);
-//            btn_blue.setClickable(true);
-//            btn_BigWhite.setClickable(true);
-//            btn_grblue.setClickable(true);
-//            btn_red.setClickable(true);
-//            btn_green.setClickable(true);
-//        }
-//        light.yellow(status);
-//    }
-//
-//    @OnClick(R.id.btn_grblue)
-//    void btn_grblue() {
-//        status = !status;
-//        if (status) {
-//            btn_littleWhite.setClickable(false);
-//            btn_blue.setClickable(false);
-//            btn_yellow.setClickable(false);
-//            btn_BigWhite.setClickable(false);
-//            btn_red.setClickable(false);
-//            btn_green.setClickable(false);
-//        }else{
-//            btn_littleWhite.setClickable(true);
-//            btn_blue.setClickable(true);
-//            btn_yellow.setClickable(true);
-//            btn_BigWhite.setClickable(true);
-//            btn_red.setClickable(true);
-//            btn_green.setClickable(true);
-//        }
-//        light.grblue(status);
-//    }
-//
-//    @OnClick(R.id.btn_red)
-//    void btn_red() {
-//        status = !status;
-//        if (status) {
-//            btn_littleWhite.setClickable(false);
-//            btn_blue.setClickable(false);
-//            btn_yellow.setClickable(false);
-//            btn_grblue.setClickable(false);
-//            btn_BigWhite.setClickable(false);
-//            btn_green.setClickable(false);
-//        }else{
-//            btn_littleWhite.setClickable(true);
-//            btn_blue.setClickable(true);
-//            btn_yellow.setClickable(true);
-//            btn_grblue.setClickable(true);
-//            btn_BigWhite.setClickable(true);
-//            btn_green.setClickable(true);
-//        }
-//        light.red(status);
-//    }
-//
-//    @OnClick(R.id.btn_green)
-//    void btn_green() {
-//        status = !status;
-//        if (status) {
-//            btn_littleWhite.setClickable(false);
-//            btn_blue.setClickable(false);
-//            btn_yellow.setClickable(false);
-//            btn_grblue.setClickable(false);
-//            btn_red.setClickable(false);
-//            btn_BigWhite.setClickable(false);
-//        }else{
-//            btn_littleWhite.setClickable(true);
-//            btn_blue.setClickable(true);
-//            btn_yellow.setClickable(true);
-//            btn_grblue.setClickable(true);
-//            btn_red.setClickable(true);
-//            btn_BigWhite.setClickable(true);
-//        }
-//        light.green(status);
-//    }
 
     @OnClick(R.id.btn_change)
     void add() {
@@ -277,17 +144,55 @@ public class MainActivity extends BaseActivity {
         if (list.size() > 0) {
             tv_upload.setVisibility(View.VISIBLE);
         }
+        pp.Init(surfaceView, PhotoPresenter.MyOrientation.vertical);
+        LocationTool.getInstance(this).getLngAndLat(new LocationTool.OnLocationResultListener() {
+            @Override
+            public void onLocationResult(Location location) {
+
+            }
+
+            @Override
+            public void OnLocationChange(Location location) {
+                mlocation = location;
+            }
+        });
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-//        id = getIntent().getExtras().getString("id");
-//        pID = getIntent().getExtras().getString("pID");
-        pName = getIntent().getExtras().getString("userRealName");
-        token = getIntent().getExtras().getString("token");
-        tv_user.setText(pName + ",欢迎您！");
+        pp.PhotoPresenterSetView(this);
+        pp.setDisplay(surfaceView.getHolder());
         reUpload();
+        try {
+            token = getIntent().getExtras().getString("token");
+            tv_user.setText(pName + ",欢迎您！");
+        } catch (Exception e) {
+            ToastUtils.showLong(e.toString());
+        }
+    }
+
+    @Override
+    public void onGetPhoto(Bitmap bmp) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", "sdasd");
+            jsonObject.put("daid", config.getString("daid"));
+            jsonObject.put("pID", "441302199308100538");
+            jsonObject.put("pName", pName);
+            jsonObject.put("infoType", "正常");
+            jsonObject.put("x", mlocation.getLatitude());
+            jsonObject.put("y", mlocation.getLongitude());
+            jsonObject.put("info", "sadsdsd");
+            jsonObject.put("photo", FileUtils.bitmapToBase64(bmp));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCaremaText(String s) {
 
     }
 
@@ -461,6 +366,13 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                 });
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == 27) {
+            pp.getOneShut();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -23,10 +23,8 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         if (config.getBoolean("firstStart", true)) {
             config.put("daid", "00025");
-            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
-        } else {
-            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
         }
+        ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
         finish();
     }
 }

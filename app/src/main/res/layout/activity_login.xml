@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="44px"
         android:layout_marginLeft="60px"
+        android:inputType="textPassword"
         android:layout_marginTop="16dp"
         android:background="@null"
         android:maxLines="1"

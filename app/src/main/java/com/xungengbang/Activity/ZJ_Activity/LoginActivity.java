@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.widget.EditText;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -21,14 +21,11 @@ import com.xungengbang.Tool.Alarm;
 import com.xungengbang.Tool.MD5;
 import com.xungengbang.Tool.MyObserver;
 import com.xungengbang.Tool.ServerConnectionUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,7 +39,6 @@ public class LoginActivity extends BaseActivity {
 
     SPUtils config = SPUtils.getInstance("config");
 
-
     String[] permissions = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.VIBRATE,
@@ -50,12 +46,15 @@ public class LoginActivity extends BaseActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
     };
 
     @OnClick(R.id.btn_login)
     void login() {
         if (TextUtils.isEmpty(et_username.getText().toString()) || TextUtils.isEmpty(et_password.getText().toString())) {
-            ToastUtils.showLong("账号密码信息录入不全");
+//            ToastUtils.showLong("账号密码信息录入不全");
+            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity");
         } else {
             if (SPUtils.getInstance("config").getBoolean("firstStart", true)) {
                 SPUtils.getInstance("config").put("firstStart", false);
@@ -84,7 +83,6 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
 //        et_username.setText("yydw");
 //        et_password.setText("88888");
-        autoUpdate();
         requestRunPermisssion(permissions, new PermissionListener() {
             @Override
             public void onGranted() {
@@ -110,6 +108,11 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        autoUpdate();
+    }
 
     public void login(String jsonData) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData);
@@ -164,5 +167,10 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
     }
 }

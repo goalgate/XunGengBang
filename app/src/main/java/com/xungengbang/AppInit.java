@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import com.blankj.utilcode.util.Utils;
 import com.xungengbang.Config.BaseConfig;
+import com.xungengbang.Config.WJM_Config;
 import com.xungengbang.Config.ZJ_Config;
 import com.xungengbang.greendao.DaoMaster;
 import com.xungengbang.greendao.DaoSession;
