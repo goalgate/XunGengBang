@@ -44,7 +44,7 @@ public class AppInit extends Application {
 
         Utils.init(getContext());
 
-        config = new ZJ_Config();
+        config = new WJM_Config();
 
         setDatabase();
     }

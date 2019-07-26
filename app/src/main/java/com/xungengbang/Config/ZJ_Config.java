@@ -10,4 +10,14 @@ public class ZJ_Config extends BaseConfig{
     public String getPackage() {
         return ".Activity.ZJ_Activity";
     }
+
+    @Override
+    public String getMainActivity() {
+        return ".MainActivity";
+    }
+
+    @Override
+    public boolean stick() {
+        return true;
+    }
 }

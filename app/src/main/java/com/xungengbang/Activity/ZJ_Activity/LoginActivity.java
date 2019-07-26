@@ -53,8 +53,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.btn_login)
     void login() {
         if (TextUtils.isEmpty(et_username.getText().toString()) || TextUtils.isEmpty(et_password.getText().toString())) {
-//            ToastUtils.showLong("账号密码信息录入不全");
-            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity");
+            ToastUtils.showLong("账号密码信息录入不全");
         } else {
             if (SPUtils.getInstance("config").getBoolean("firstStart", true)) {
                 SPUtils.getInstance("config").put("firstStart", false);

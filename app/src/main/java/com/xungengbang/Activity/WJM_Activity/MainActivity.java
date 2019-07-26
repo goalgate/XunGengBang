@@ -1,11 +1,21 @@
 package com.xungengbang.Activity.WJM_Activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.telephony.NeighboringCellInfo;
+import android.telephony.TelephonyManager;
+import android.telephony.cdma.CdmaCellLocation;
+import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceView;
@@ -14,8 +24,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LocationUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.xungengbang.Activity.BaseActivity;
@@ -27,27 +37,21 @@ import com.xungengbang.Connect.RetrofitGenerator;
 import com.xungengbang.Light.presenter.LightPresenter;
 import com.xungengbang.R;
 import com.xungengbang.Tool.FileUtils;
-import com.xungengbang.Tool.LocationTool;
 import com.xungengbang.Tool.MyObserver;
 import com.xungengbang.greendao.DaoSession;
 import com.xungengbang.greendao.ReUploadBeanDao;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -108,14 +112,13 @@ public class MainActivity extends BaseActivity implements IPhotoView {
             btn_BigWhite.setBackground(getDrawable(R.drawable.dd_1));
         } else {
             btn_BigWhite.setBackground(getDrawable(R.drawable.dd));
-
         }
         light.Bigwhite(status);
     }
 
     @OnClick(R.id.btn_change)
-    void add() {
-        ActivityUtils.startActivity(getPackageName(), getPackageName() + ".Activity.LoginActivity");
+    void change() {
+        ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
         finish();
     }
 
@@ -144,20 +147,8 @@ public class MainActivity extends BaseActivity implements IPhotoView {
         if (list.size() > 0) {
             tv_upload.setVisibility(View.VISIBLE);
         }
-        pp.Init(surfaceView, PhotoPresenter.MyOrientation.vertical);
-        LocationTool.getInstance(this).getLngAndLat(new LocationTool.OnLocationResultListener() {
-            @Override
-            public void onLocationResult(Location location) {
-
-            }
-
-            @Override
-            public void OnLocationChange(Location location) {
-                mlocation = location;
-            }
-        });
+        pp.Init(surfaceView, PhotoPresenter.MyOrientation.landscape);
     }
-
 
     @Override
     protected void onResume() {
@@ -169,9 +160,30 @@ public class MainActivity extends BaseActivity implements IPhotoView {
             token = getIntent().getExtras().getString("token");
             tv_user.setText(pName + ",欢迎您！");
         } catch (Exception e) {
-            ToastUtils.showLong(e.toString());
+            e.printStackTrace();
         }
+//        LocationUtils.register(3000, 100, new LocationUtils.OnLocationChangeListener() {
+//            @Override
+//            public void getLastKnownLocation(Location location) {
+//                mlocation = location;
+//                tv_info.setText(String.valueOf(location.getLatitude()));
+//
+//            }
+//
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                mlocation = location;
+//                tv_info.setText(String.valueOf(location.getLatitude()));
+//
+//            }
+//
+//            @Override
+//            public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//            }
+//        });
     }
+
 
     @Override
     public void onGetPhoto(Bitmap bmp) {
@@ -182,13 +194,20 @@ public class MainActivity extends BaseActivity implements IPhotoView {
             jsonObject.put("pID", "441302199308100538");
             jsonObject.put("pName", pName);
             jsonObject.put("infoType", "正常");
-            jsonObject.put("x", mlocation.getLatitude());
-            jsonObject.put("y", mlocation.getLongitude());
+            jsonObject.put("x", mlocation != null ? mlocation.getLatitude() : 0.00);
+            jsonObject.put("y", mlocation != null ? mlocation.getLongitude() : 0.00);
             jsonObject.put("info", "sadsdsd");
             jsonObject.put("photo", FileUtils.bitmapToBase64(bmp));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        LocationUtils.unregister();
+
     }
 
     @Override
@@ -368,11 +387,13 @@ public class MainActivity extends BaseActivity implements IPhotoView {
                 });
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == 27) {
             pp.getOneShut();
         }
+
         return super.onKeyDown(keyCode, event);
     }
 }

@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xungengbang">
 
-    <!-- 在sd卡中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 向SD卡写入数据权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.NFC" />
@@ -13,8 +11,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <application
         android:name=".AppInit"
         android:allowBackup="true"
@@ -24,29 +25,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Activity.SplashActivity">
+        <activity android:name=".Activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name=".Activity.WJM_Activity.LoginActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleInstance">
         </activity>
 
         <activity android:name=".Activity.WJM_Activity.MainActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
-
+        <activity android:name=".Activity.WJM_Activity.MainActivity2"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+        </activity>
         <activity android:name=".Activity.ZJ_Activity.LoginActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleInstance"></activity>
 
         <activity android:name=".Activity.ZJ_Activity.MainActivity"
-            android:launchMode="singleTop">
-        </activity>
-        <activity android:name=".Activity.TestActivity"
+            android:screenOrientation="portrait"
+
             android:launchMode="singleTop">
         </activity>
     </application>

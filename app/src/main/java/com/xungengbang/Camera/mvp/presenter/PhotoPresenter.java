@@ -56,6 +56,9 @@ public class PhotoPresenter {
         }
     }
 
+    public void Flash(boolean status){
+        photoModule.Flash(status);
+    }
 
     public void setDisplay(SurfaceHolder surfaceHolder){
         try {

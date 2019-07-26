@@ -4,14 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LocationUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.xungengbang.AppInit;
 import com.xungengbang.R;
-import com.xungengbang.Tool.DESX;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class SplashActivity extends BaseActivity {
 
@@ -26,5 +22,7 @@ public class SplashActivity extends BaseActivity {
         }
         ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
         finish();
+
+
     }
 }

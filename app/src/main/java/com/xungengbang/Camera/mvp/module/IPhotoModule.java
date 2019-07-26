@@ -26,6 +26,8 @@ public interface IPhotoModule {
 
     void onActivityDestroy();
 
+    void Flash(boolean status);
+
     interface IOnSetListener {
         void onBtnText(String msg);//按完按钮后的回调接口
 

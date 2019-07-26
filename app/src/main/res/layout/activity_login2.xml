@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background">
+
+    <EditText
+        android:id="@+id/et_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="111px"
+        android:layout_marginTop="236.62px"
+        android:layout_marginRight="11px"
+
+        android:background="@null"
+        android:hint="请输入登录账号"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110px"
+        android:layout_marginTop="338.04px"
+        android:layout_marginRight="40px"
+        android:background="@null"
+        android:hint="请输入登录密码"
+        android:inputType="textPassword"
+        android:maxLines="1" />
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="471.47px"
+        android:background="@drawable/selector_dl" />
+
+</RelativeLayout>

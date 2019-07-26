@@ -29,7 +29,6 @@ import com.xungengbang.Connect.RetrofitGenerator;
 import com.xungengbang.Light.presenter.LightPresenter;
 import com.xungengbang.R;
 import com.xungengbang.Tool.FileUtils;
-import com.xungengbang.Tool.LocationTool;
 import com.xungengbang.Tool.MyObserver;
 import com.xungengbang.greendao.DaoSession;
 import com.xungengbang.greendao.ReUploadBeanDao;

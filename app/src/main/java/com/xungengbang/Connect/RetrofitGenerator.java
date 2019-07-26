@@ -38,7 +38,7 @@ public class RetrofitGenerator {
         return retrofit.create(serviceClass);
     }
 
-    private static <S> S createService(Class<S> serviceClass, String url) {
+    private  <S> S createService(Class<S> serviceClass, String url) {
         OkHttpClient client = okHttpClient.connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
@@ -50,7 +50,7 @@ public class RetrofitGenerator {
         return retrofit.create(serviceClass);
     }
 
-    public static TestApi getTestApi(String url) {
+    public  TestApi getTestApi(String url) {
         if (testApi == null) {
             testApi = createService(TestApi.class,url);
         }
@@ -63,7 +63,7 @@ public class RetrofitGenerator {
         return testApi;
     }
 
-    public static ConnectApi getConnectApi(String url) {
+    public  ConnectApi getConnectApi(String url) {
         if (connectApi == null) {
             connectApi = createService(ConnectApi.class,url);
         }

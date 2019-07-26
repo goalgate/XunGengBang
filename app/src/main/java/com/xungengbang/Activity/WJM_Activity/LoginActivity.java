@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LocationUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -50,12 +52,16 @@ public class LoginActivity extends BaseActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
     };
 
     @OnClick(R.id.btn_login)
     void login() {
         if (TextUtils.isEmpty(et_username.getText().toString()) || TextUtils.isEmpty(et_password.getText().toString())) {
-            ToastUtils.showLong("账号密码信息录入不全");
+//            ToastUtils.showLong("账号密码信息录入不全");
+            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity2");
+
         } else {
             if (SPUtils.getInstance("config").getBoolean("firstStart", true)) {
                 SPUtils.getInstance("config").put("firstStart", false);
@@ -80,10 +86,16 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        if(AppInit.getConfig().stick()){
+            setContentView(R.layout.activity_login);
+        }else {
+            setContentView(R.layout.activity_login2);
+        }
         ButterKnife.bind(this);
-        et_username.setText("ceshiabc");
-        et_password.setText("88888");
+//        et_username.setText("ceshiabc");
+//        et_password.setText("88888");
+
+
         requestRunPermisssion(permissions, new PermissionListener() {
             @Override
             public void onGranted() {
@@ -95,6 +107,7 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
+
     }
 
 
@@ -115,7 +128,7 @@ public class LoginActivity extends BaseActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", data.getString("token"));
 //                                bundle.putString("userRealName", data.getString("userRealName"));
-                                ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity");
+                                ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity2");
                             } else if (jsonData.getString("code") == "2") {
                                 ToastUtils.showLong(jsonData.getString("info"));
                             }
@@ -135,10 +148,7 @@ public class LoginActivity extends BaseActivity {
         Alarm.getInstance(this).release();
     }
 
-    @Override
-    public void onBackPressed() {
 
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {

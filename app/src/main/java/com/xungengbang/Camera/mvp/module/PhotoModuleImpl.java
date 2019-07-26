@@ -24,6 +24,7 @@ import com.xungengbang.Camera.mvp.presenter.PhotoPresenter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,25 +40,16 @@ public class PhotoModuleImpl implements IPhotoModule, Camera.PreviewCallback {
     final static String ApplicationName = PhotoModuleImpl.class.getSimpleName();
 
     Camera camera;
-    SurfaceView mSurfaceView;
 
+    SurfaceView mSurfaceView;
 
     IOnSetListener callback;
 
     byte[] global_bytes;
 
-
     int width;
 
     int height;
-
-    int surfaceViewWidth;
-
-    int surfaceViewHeight;
-
-    float paramWidth;
-
-    float paramHeight;
 
     PhotoPresenter.MyOrientation myOrientation = PhotoPresenter.MyOrientation.landscape;
 
@@ -129,8 +121,9 @@ public class PhotoModuleImpl implements IPhotoModule, Camera.PreviewCallback {
             default:
                 break;
         }
-        camera.setPreviewCallbackWithBuffer(PhotoModuleImpl.this);
-        camera.addCallbackBuffer(new byte[width * height * ImageFormat.getBitsPerPixel(ImageFormat.NV21) / 8]);
+//        camera.setPreviewCallbackWithBuffer(PhotoModuleImpl.this);
+//        camera.addCallbackBuffer(new byte[width * height * ImageFormat.getBitsPerPixel(ImageFormat.NV21) / 8]);
+//
         camera.setPreviewCallback(PhotoModuleImpl.this);
     }
 
@@ -193,6 +186,18 @@ public class PhotoModuleImpl implements IPhotoModule, Camera.PreviewCallback {
 //        });
 //    }
 
+
+    @Override
+    public void Flash(boolean status) {
+        Camera.Parameters parameters = camera.getParameters();
+        if(status){
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);//开启
+            camera.setParameters(parameters);
+        }else{
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);//关闭
+            camera.setParameters(parameters);
+        }
+    }
 
     @Override
     public void onActivityDestroy() {
