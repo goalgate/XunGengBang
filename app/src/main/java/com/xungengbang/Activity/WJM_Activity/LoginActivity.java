@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity {
     void login() {
         if (TextUtils.isEmpty(et_username.getText().toString()) || TextUtils.isEmpty(et_password.getText().toString())) {
 //            ToastUtils.showLong("账号密码信息录入不全");
-            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity2");
+            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
 
         } else {
             if (SPUtils.getInstance("config").getBoolean("firstStart", true)) {
@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", data.getString("token"));
 //                                bundle.putString("userRealName", data.getString("userRealName"));
-                                ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+".MainActivity2");
+                                ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
                             } else if (jsonData.getString("code") == "2") {
                                 ToastUtils.showLong(jsonData.getString("info"));
                             }

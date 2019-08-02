@@ -13,15 +13,15 @@ public class WJM_Config extends BaseConfig {
 
     @Override
     public boolean stick() {
-        return false;
+        return true;
     }
 
     @Override
     public String getMainActivity() {
         if (stick()){
-            return ".MainActivity2";
-        }else {
             return ".MainActivity";
+        }else {
+            return ".MainActivity2";
         }
     }
 }

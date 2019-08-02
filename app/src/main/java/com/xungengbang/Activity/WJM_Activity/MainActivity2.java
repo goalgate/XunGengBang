@@ -553,13 +553,13 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
                         ToastUtils.showLong("您的输入为空请重试");
                     } else {
                         try {
+                            infos.add(0,et_info.getText().toString());
                             if (infos.size() >= 3) {
                                 infos.remove(infos.size()-1);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        infos.add(et_info.getText().toString());
                         SPUtils.getInstance("info").put("content", SPUtils.getInstance("info").getString("content") + et_info.getText().toString() + ",");
                         photoUpload();
                     }
