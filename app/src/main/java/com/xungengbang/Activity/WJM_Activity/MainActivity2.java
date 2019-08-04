@@ -1,22 +1,12 @@
 package com.xungengbang.Activity.WJM_Activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.telephony.NeighboringCellInfo;
-import android.telephony.TelephonyManager;
-import android.telephony.cdma.CdmaCellLocation;
-import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -43,7 +32,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LocationUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.Utils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.xungengbang.Activity.BaseActivity;
@@ -52,7 +40,6 @@ import com.xungengbang.Bean.ReUploadBean;
 import com.xungengbang.Camera.mvp.presenter.PhotoPresenter;
 import com.xungengbang.Camera.mvp.view.IPhotoView;
 import com.xungengbang.Connect.RetrofitGenerator;
-import com.xungengbang.Light.presenter.LightPresenter;
 import com.xungengbang.R;
 import com.xungengbang.Tool.FileUtils;
 import com.xungengbang.Tool.MyObserver;
@@ -65,11 +52,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -150,14 +134,14 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
     @OnClick(R.id.btn_change)
     void change() {
         ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
-        finish();
     }
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
         disposableTips = RxTextView.textChanges(tv_info)
                 .debounce(10, TimeUnit.SECONDS)

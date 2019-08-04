@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y20"
+            android:background="@color/main_background"
+            android:layout_alignParentTop="true"></LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● 消息未上传"
+            android:textColor="#ee5656"
+            android:layout_marginTop="@dimen/y50"
+            android:layout_marginRight="@dimen/x27"
+            android:layout_alignParentRight="true"
+            android:textSize="24px"
+            android:visibility="visible"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/touxiang"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y113"/>
+
+        <TextView
+            android:id="@+id/tv_user"
+            android:textSize="28px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y195"
+            android:layout_centerHorizontal="true"
+            android:text="宁志锦，欢迎您"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x27"
+            android:layout_marginRight="@dimen/x27"
+            android:layout_marginTop="@dimen/y255">
+
+            <Button
+                android:id="@+id/btn_BigWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/y20"
+                android:background="@drawable/selector_light"/>
+
+
+            <Button
+                android:id="@+id/btn_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_user"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24px"
+            android:layout_marginBottom="@dimen/y30"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="请将巡更棒靠近巡更点处进行巡更操作"/>
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+</RelativeLayout>
