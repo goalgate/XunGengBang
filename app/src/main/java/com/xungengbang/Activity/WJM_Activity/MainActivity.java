@@ -240,7 +240,7 @@ public class MainActivity extends BaseActivity implements IPhotoView {
                 jsonObject.put("xgsbBianhao", config.getString("daid"));
                 jsonObject.put("xgdBianhao", result.toUpperCase());
                 jsonObject.put("xgTime", formatter.format(new Date(System.currentTimeMillis())));
-                upData(jsonObject.toString());
+                upData(jsonObject.toString(),result.toUpperCase());
             } catch (NullPointerException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -250,7 +250,7 @@ public class MainActivity extends BaseActivity implements IPhotoView {
     }
 
 
-    public void upData(final String jsonData) {
+    public void upData(final String jsonData,String name_IC) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData);
         RetrofitGenerator.getConnectApi().updata(token, body)
                 .subscribeOn(Schedulers.io())
@@ -263,7 +263,7 @@ public class MainActivity extends BaseActivity implements IPhotoView {
                         try {
                             JSONObject jsonData = new JSONObject(responseBody.string());
                             if (jsonData.getString("code") == "0") {
-                                tv_info.setText(jsonData.getString("info"));
+                                tv_info.setText(jsonData.getString("info")+"\n该巡更点号为 "+name_IC);
                                 light.red(true);
                                 Observable.timer(1, TimeUnit.SECONDS)
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -466,8 +466,10 @@ public class MainActivity extends BaseActivity implements IPhotoView {
             adapter.notifyDataSetChanged();
             et_info.setText(null);
             info_alert.show();
+        } else if(keyCode ==20){
+            ToastUtils.showLong(config.getString("daid"));
         }
-        ToastUtils.showLong(String.valueOf(keyCode));
+//        ToastUtils.showLong(String.valueOf(keyCode));
         return super.onKeyDown(keyCode, event);
     }
 

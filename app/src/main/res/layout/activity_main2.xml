@@ -35,7 +35,7 @@
             android:layout_marginRight="@dimen/x27"
             android:layout_alignParentRight="true"
             android:textSize="24px"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
 
         <ImageView
@@ -86,7 +86,10 @@
             android:layout_height="wrap_content"
             android:textSize="24px"
             android:layout_marginBottom="@dimen/y30"
+            android:layout_marginLeft="@dimen/x69"
+            android:layout_marginRight="@dimen/x75"
             android:layout_alignParentBottom="true"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:text="请将巡更棒靠近巡更点处进行巡更操作"/>
 

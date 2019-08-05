@@ -137,7 +137,6 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +172,7 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
         pp.setDisplay(surfaceView.getHolder());
         reUpload();
         try {
-            if(!LocationUtils.isGpsEnabled()){
+            if (!LocationUtils.isGpsEnabled()) {
                 LocationUtils.openGpsSettings();
             }
             if (LocationUtils.isLocationEnabled()) {
@@ -247,7 +246,7 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
                 jsonObject.put("xgsbBianhao", config.getString("daid"));
                 jsonObject.put("xgdBianhao", result.toUpperCase());
                 jsonObject.put("xgTime", formatter.format(new Date(System.currentTimeMillis())));
-                upData(jsonObject.toString());
+                upData(jsonObject.toString(),result.toUpperCase());
             } catch (NullPointerException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -271,7 +270,7 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
         return super.onKeyUp(keyCode, event);
     }
 
-    public void upData(final String jsonData) {
+    public void upData(String jsonData,String name_IC) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData);
         RetrofitGenerator.getConnectApi().updata(token, body)
                 .subscribeOn(Schedulers.io())
@@ -282,9 +281,9 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
                     public void onNext(ResponseBody responseBody) {
                         try {
                             JSONObject jsonData = new JSONObject(responseBody.string());
-                            if (jsonData.getString("code") == "0") {
-                                tv_info.setText(jsonData.getString("info"));
-                            } else if (jsonData.getString("code") == "1") {
+                            if (jsonData.getInt("code") == 0) {
+                                tv_info.setText(jsonData.getString("info")+"\n该巡更点号为 "+name_IC);
+                            } else if (jsonData.getInt("code") == 1) {
                                 tv_info.setText("巡更成功");
                             }
                         } catch (JSONException e) {
@@ -537,9 +536,9 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
                         ToastUtils.showLong("您的输入为空请重试");
                     } else {
                         try {
-                            infos.add(0,et_info.getText().toString());
+                            infos.add(0, et_info.getText().toString());
                             if (infos.size() >= 3) {
-                                infos.remove(infos.size()-1);
+                                infos.remove(infos.size() - 1);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

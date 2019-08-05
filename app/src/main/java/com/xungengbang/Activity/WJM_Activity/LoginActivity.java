@@ -59,13 +59,12 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.btn_login)
     void login() {
         if (TextUtils.isEmpty(et_username.getText().toString()) || TextUtils.isEmpty(et_password.getText().toString())) {
-//            ToastUtils.showLong("账号密码信息录入不全");
-            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
-
+            ToastUtils.showLong("账号密码信息录入不全");
+//            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
         } else {
-            if (SPUtils.getInstance("config").getBoolean("firstStart", true)) {
-                SPUtils.getInstance("config").put("firstStart", false);
-            }
+//            if (SPUtils.getInstance("config").getBoolean("firstStart", true)) {
+//                SPUtils.getInstance("config").put("firstStart", false);
+//            }
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("username", et_username.getText().toString());
@@ -123,7 +122,7 @@ public class LoginActivity extends BaseActivity {
                     public void onNext(ResponseBody responseBody) {
                         try {
                             JSONObject jsonData = new JSONObject(responseBody.string());
-                            if (jsonData.getString("code") == "1") {
+                            if (jsonData.getInt("code") == 1) {
                                 JSONObject data = new JSONObject(jsonData.getString("data"));
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", data.getString("token"));

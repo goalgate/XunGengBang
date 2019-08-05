@@ -3,7 +3,7 @@ package com.xungengbang.Config;
 public class WJM_Config extends BaseConfig {
     @Override
     public String getServerId() {
-        return "http://192.168.11.136:8102/";
+        return "http://yzbyun.wxhxp.cn:81/";
     }
 
     @Override

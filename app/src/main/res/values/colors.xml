@@ -6,7 +6,8 @@
 
     <color name="secondary_text">#757575</color>
     <color name="primary_text">#212121</color>
-
+    <color name="primary_dark">#455A64</color>
+    <color name="primary_light">#CFD8DC</color>
 
     <color name="main_background">#2DBFDF</color>
 </resources>
