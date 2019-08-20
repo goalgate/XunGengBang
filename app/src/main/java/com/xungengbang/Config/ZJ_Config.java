@@ -20,4 +20,9 @@ public class ZJ_Config extends BaseConfig{
     public boolean stick() {
         return true;
     }
+
+    @Override
+    public String getChildServerId() {
+        return null;
+    }
 }
