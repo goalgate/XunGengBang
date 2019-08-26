@@ -134,6 +134,7 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
     @OnClick(R.id.btn_change)
     void change() {
         ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
+        this.finish();
     }
 
 
@@ -194,7 +195,7 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
                 });
             }
             token = getIntent().getExtras().getString("token");
-            tv_user.setText(pName + ",欢迎您！");
+//            tv_user.setText(pName + ",欢迎您！");
         } catch (Exception e) {
             e.printStackTrace();
         }

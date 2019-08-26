@@ -18,7 +18,7 @@ public class WJM_Config extends BaseConfig {
 
     @Override
     public boolean stick() {
-        return true;
+        return false;
     }
 
     @Override

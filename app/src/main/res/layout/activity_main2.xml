@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y195"
             android:layout_centerHorizontal="true"
-            android:text="宁志锦，欢迎您"
             />
 
         <LinearLayout
