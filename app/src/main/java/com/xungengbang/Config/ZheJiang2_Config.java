@@ -1,24 +1,24 @@
 package com.xungengbang.Config;
 
-public class WJM_Config extends BaseConfig {
+public class ZheJiang2_Config extends BaseConfig {
     @Override
     public String getServerId() {
-        return "http://yzbyun.wxhxp.cn:81/";
-    }
-
-    @Override
-    public String getChildServerId() {
-        return null;
+        return "http://14.23.69.2:1140/";
     }
 
     @Override
     public String getPackage() {
-        return ".Activity.WJM_Activity";
+        return ".Activity.ZheJiangActivity";
+    }
+
+    @Override
+    public String getChildServerId() {
+        return "http://14.23.69.2:1161/";
     }
 
     @Override
     public boolean stick() {
-        return true;
+        return false;
     }
 
     @Override

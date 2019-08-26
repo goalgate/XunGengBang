@@ -55,6 +55,20 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".Activity.ZheJiangActivity.LoginActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".Activity.ZheJiangActivity.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.ZheJiangActivity.MainActivity2"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
 
         <activity
             android:name=".Activity.ZJ_Activity.LoginActivity"

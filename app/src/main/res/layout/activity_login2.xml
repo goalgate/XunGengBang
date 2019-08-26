@@ -37,4 +37,13 @@
         android:layout_marginTop="471.47px"
         android:background="@drawable/selector_dl" />
 
+
+    <TextView
+        android:id="@+id/tv_daid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60px"/>
+
 </RelativeLayout>
