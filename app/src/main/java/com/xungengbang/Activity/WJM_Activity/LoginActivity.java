@@ -2,11 +2,14 @@ package com.xungengbang.Activity.WJM_Activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,7 +18,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.LocationUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -100,8 +102,8 @@ public class LoginActivity extends BaseActivity {
             setContentView(R.layout.activity_login2);
         }
         ButterKnife.bind(this);
-//        et_username.setText("ceshiabc");
-//        et_password.setText("88888");
+        et_username.setText("tceshi1");
+        et_password.setText("88888");
 
         tv_daid.setText("当前设备ID号为" + config.getString("daid"));
 
@@ -123,16 +125,25 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new ServerConnectionUtil().download("http://124.172.232.89:8050/daServer/updateADA.do?ver=" +AppUtils.getAppVersionName() + "&daid=" + config.getString("daid"), new ServerConnectionUtil.Callback() {
-            @Override
-            public void onResponse(String response) {
-                if (response != null) {
-                    if (response.equals("true")) {
-                        AppUtils.installApp(new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "Download" + File.separator + "app-release.apk"), "application/vnd.android.package-archive");
-                    }
-                }
-            }
-        });
+//        new ServerConnectionUtil().download("http://124.172.232.89:8050/daServer/updateADA.do?ver=" +AppUtils.getAppVersionName() + "&daid=" + config.getString("daid"), new ServerConnectionUtil.Callback() {
+//            @Override
+//            public void onResponse(String response) {
+//                if (response != null) {
+//                    if (response.equals("true")) {
+//                        if(Build.VERSION.SDK_INT>=24) {//判读版本是否在7.0以上
+//                            Uri apkUri = FileProvider.getUriForFile(LoginActivity.this, "com.xungengbang.fileprovider", new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "Download" + File.separator + "app-release.apk"));
+//                            Intent install = new Intent(Intent.ACTION_VIEW);
+//                            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+//                            startActivity(install);
+//                        }else{
+//                            AppUtils.installApp(new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "Download" + File.separator + "app-release.apk"), "application/vnd.android.package-archive");
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
 
 
@@ -152,7 +163,8 @@ public class LoginActivity extends BaseActivity {
                                 JSONObject data = new JSONObject(jsonData.getString("data"));
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", data.getString("token"));
-//                                bundle.putString("userRealName", data.getString("userRealName"));
+                                bundle.putString("pName", data.getString("compName"));
+                                bundle.putString("compId",data.getString("compId"));
                                 ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
                                 LoginActivity.this.finish();
                             } else if (jsonData.getInt("code") == 2) {

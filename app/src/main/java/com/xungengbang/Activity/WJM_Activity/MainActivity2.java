@@ -354,7 +354,7 @@ public class MainActivity2 extends BaseActivity implements IPhotoView {
                                                 }
                                             }
                                         });
-                            } else if (bean.getMethod().equals("upData")) {
+                            } else if (bean.getMethod().equals("photoUpload")) {
                                 new RetrofitGenerator().getConnectApi("http://124.172.232.89:8050/daServer/")
                                         .photoUpload("info", bean.getContent())
                                         .subscribeOn(Schedulers.io())

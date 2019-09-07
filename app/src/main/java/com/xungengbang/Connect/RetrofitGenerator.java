@@ -21,7 +21,7 @@ public class RetrofitGenerator {
     private static String testUrl1 = "http://1i713e1305.imwork.net:23728/";
     private static SPUtils config = SPUtils.getInstance("config");
     private static ConnectApi connectApi;
-    private  ConnectApi testConnectApi;
+    private ConnectApi testConnectApi;
 
     private static TestApi testApi;
     private  TestApi testTestApi;
@@ -89,7 +89,7 @@ public class RetrofitGenerator {
         if (testConnectApi == null) {
             testConnectApi = createService(ConnectApi.class,url);
         }
-        return connectApi;
+        return testConnectApi;
     }
     public static ConnectApi getConnectApi() {
         if (connectApi == null) {
