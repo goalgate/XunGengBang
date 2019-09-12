@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
 
     <application
         android:name=".AppInit"
@@ -72,10 +73,10 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"></activity>
 
-        <activity
-            android:name=".Activity.ZheJiangActivity.MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+        <!--<activity-->
+            <!--android:name=".Activity.ZheJiangActivity.MainActivity"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="portrait"></activity>-->
         <activity
             android:name=".Activity.ZheJiangActivity.MainActivity2"
             android:launchMode="singleTop"
@@ -91,6 +92,12 @@
             android:name=".Activity.ZJ_Activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
+
+        <receiver android:name=".BroadcastReceiver.BootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

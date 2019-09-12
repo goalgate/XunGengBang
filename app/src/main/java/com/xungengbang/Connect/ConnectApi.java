@@ -23,6 +23,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -34,20 +35,23 @@ public interface ConnectApi {
     @POST("api/sbXungengInfo/authc/insertBaojing")
     Observable<ResponseBody> alarm(@Header("authorization-token") String token, @Body RequestBody body);
 
-
     @POST("api/sbXungengInfo/insert")
     Observable<ResponseBody> updata(@Header("authorization-token") String token, @Body RequestBody body);
 
-    @POST("api/sbXungengInfo/insert")
-    Observable<ResponseBody> updataFile(@Header("authorization-token") String token,  @Body SbXungengInfoVo body );
 
     @Multipart
     @POST("app/fileUpload/authc/directUploadToFastDFS")
     Observable<ResponseBody> uploadPhotos(@Header("authorization-token") String token,
                                           @Part MultipartBody.Part... files);
 
+    @POST("app/appVersion/s/version/{avType}")
+    Observable<ResponseBody> update(@Header("authorization-token") String token, @Path("avType") String avType);
+
+    @POST("api/sbXungengInfo/insert")
+    Observable<ResponseBody> updataFile(@Header("authorization-token") String token,  @Body SbXungengInfoVo body );
 
     @FormUrlEncoded
     @POST("xg_sjjk")
     Observable<ResponseBody> photoUpload(@Field("dataType") String dataType, @Field("jsonData") String jsonData);
+
 }

@@ -20,7 +20,8 @@
             android:id="@+id/et_daid"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
+            android:maxLines="1"
             android:textColor="@color/primary_light"
             android:textSize="10pt" />
 

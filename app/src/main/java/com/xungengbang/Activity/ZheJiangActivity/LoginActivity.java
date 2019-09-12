@@ -229,7 +229,6 @@ public class LoginActivity extends BaseActivity {
                                                         @Override
                                                         public void onNext(Response<ResponseBody> value) {
                                                             try {
-
                                                                 StringReader sr = new StringReader(value.body().string());
                                                                 InputSource is = new InputSource(sr);
                                                                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -240,7 +239,6 @@ public class LoginActivity extends BaseActivity {
                                                                 Element real_name = (Element) root.getElementsByTagName("cas:real_name").item(0);
                                                                 Element user_id = (Element) root.getElementsByTagName("cas:user_id").item(0);
                                                                 Element comp_id = (Element) root.getElementsByTagName("cas:comp_id").item(0);
-
                                                                 Log.e("SDsd",authentication.getFirstChild().getNodeValue());
                                                                 Bundle bundle = new Bundle();
                                                                 bundle.putString("token", authentication.getFirstChild().getNodeValue());

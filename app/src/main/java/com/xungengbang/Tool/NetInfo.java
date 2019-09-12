@@ -44,7 +44,7 @@ public class NetInfo {
 
     //取macID
     public String getMacId() {
-        return macToId(getMac());
+        return macToId(getWifiMac());
     }
 
 

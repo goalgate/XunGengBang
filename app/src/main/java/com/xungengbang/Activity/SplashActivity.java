@@ -21,10 +21,14 @@ public class SplashActivity extends BaseActivity {
         BarUtils.hideStatusBar(this);
         setContentView(R.layout.activity_splash);
         if (config.getBoolean("firstStart", true)) {
-            ActivityUtils.startActivity(getPackageName(), getPackageName() +".Activity.StartActivity");
-        }else{
-            ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
+            config.put("daid", new NetInfo().getMacId());
+//            config.put("daid", "00025");
+            config.put("ServerId",AppInit.getConfig().getServerId());
+            config.put("firstStart",false);
+//            ActivityUtils.startActivity(getPackageName(), getPackageName() +".Activity.StartActivity");
         }
+        ActivityUtils.startActivity(getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + ".LoginActivity");
+
         finish();
     }
 }

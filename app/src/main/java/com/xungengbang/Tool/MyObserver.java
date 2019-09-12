@@ -20,8 +20,6 @@ public class MyObserver<T> implements Observer<T>{
 
     private ProgressDialog progressDialog;
 
-
-
     public MyObserver(Context context) {
         this.context = context;
         this.progressDialog = new ProgressDialog(context);

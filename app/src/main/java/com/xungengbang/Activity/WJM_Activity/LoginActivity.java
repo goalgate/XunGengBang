@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -96,14 +97,14 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppInit.getConfig().stick()){
+        if (AppInit.getConfig().stick()) {
             setContentView(R.layout.activity_login);
-        }else {
+        } else {
             setContentView(R.layout.activity_login2);
         }
         ButterKnife.bind(this);
-        et_username.setText("tceshi1");
-        et_password.setText("88888");
+//        et_username.setText("tceshi1");
+//        et_password.setText("88888");
 
         tv_daid.setText("当前设备ID号为" + config.getString("daid"));
 
@@ -146,8 +147,6 @@ public class LoginActivity extends BaseActivity {
 //        });
     }
 
-
-
     public void login(String jsonData) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData);
         RetrofitGenerator.getConnectApi().login(config.getString("daid"), body)
@@ -165,6 +164,7 @@ public class LoginActivity extends BaseActivity {
                                 bundle.putString("token", data.getString("token"));
                                 bundle.putString("pName", data.getString("compName"));
                                 bundle.putString("compId",data.getString("compId"));
+                                bundle.putString("compCode",data.getString("compCode"));
                                 ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
                                 LoginActivity.this.finish();
                             } else if (jsonData.getInt("code") == 2) {
@@ -177,7 +177,6 @@ public class LoginActivity extends BaseActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
     }
@@ -187,7 +186,6 @@ public class LoginActivity extends BaseActivity {
         super.onPause();
         Alarm.getInstance(this).release();
     }
-
 
 
     @Override
