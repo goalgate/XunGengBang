@@ -13,6 +13,7 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,6 +53,8 @@ import okhttp3.ResponseBody;
 public class LoginActivity extends BaseActivity {
 
     SPUtils config = SPUtils.getInstance("config");
+
+    SPUtils login = SPUtils.getInstance("login");
 
     String[] permissions = new String[]{
             Manifest.permission.CAMERA,
@@ -103,8 +106,14 @@ public class LoginActivity extends BaseActivity {
             setContentView(R.layout.activity_login2);
         }
         ButterKnife.bind(this);
-//        et_username.setText("tceshi1");
-//        et_password.setText("88888");
+        et_username.setOnEditorActionListener((TextView textView, int i, KeyEvent keyEvent)-> keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+        try {
+            et_username.setText(login.getString("username"));
+            et_password.setText(login.getString("password"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         tv_daid.setText("当前设备ID号为" + config.getString("daid"));
 
@@ -163,13 +172,16 @@ public class LoginActivity extends BaseActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", data.getString("token"));
                                 bundle.putString("pName", data.getString("compName"));
-                                bundle.putString("compId",data.getString("compId"));
-                                bundle.putString("compCode",data.getString("compCode"));
-                                ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage()+AppInit.getConfig().getMainActivity());
+                                bundle.putString("compId", data.getString("compId"));
+                                bundle.putString("compCode", data.getString("compCode"));
+
+                                login.put("username", et_username.getText().toString());
+                                login.put("password", et_password.getText().toString());
+                                ActivityUtils.startActivity(bundle, getPackageName(), getPackageName() + AppInit.getConfig().getPackage() + AppInit.getConfig().getMainActivity());
                                 LoginActivity.this.finish();
                             } else if (jsonData.getInt("code") == 2) {
                                 ToastUtils.showLong(jsonData.getString("info"));
-                            }else if (jsonData.getInt("code") == 99) {
+                            } else if (jsonData.getInt("code") == 99) {
                                 ToastUtils.showLong("系统找不到该账号");
                             }
                         } catch (JSONException e) {

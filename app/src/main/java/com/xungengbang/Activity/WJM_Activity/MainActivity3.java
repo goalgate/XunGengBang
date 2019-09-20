@@ -90,8 +90,8 @@ public class MainActivity3 extends BaseActivity implements IPhotoView {
     private String TAG = MainActivity.class.getSimpleName();
 
     String Picdir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "XunGengPic";
-    String Apkdir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Apk";
 
+    String Apkdir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Apk";
 
     PhotoPresenter pp = PhotoPresenter.getInstance();
 
@@ -174,7 +174,8 @@ public class MainActivity3 extends BaseActivity implements IPhotoView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((s) -> tv_info.setText(s));
         List<ReUploadBean> list = reUploadBeanDao.queryBuilder().list();
-        if (list.size() > 0) {
+        List<ReUploadComplexBean> list1 = reUploadComplexBeanDao.queryBuilder().list();
+        if (list.size() > 0 || list1.size() > 0) {
             tv_upload.setVisibility(View.VISIBLE);
         }
         pp.Init(surfaceView, PhotoPresenter.MyOrientation.landscape);
@@ -689,7 +690,9 @@ public class MainActivity3 extends BaseActivity implements IPhotoView {
                             if (bean.getMethod().equals("reBmpFile")) {
                                 List<String> refjsList = new ArrayList<>();
                                 for (String fjsname : bean.getFjUrls()) {
-                                    refjsList.add(fjsname);
+                                    if(!TextUtils.isEmpty(fjsname)){
+                                        refjsList.add(fjsname);
+                                    }
                                 }
                                 for (String filename : bean.getBmpFileNames()) {
                                     File file = new File(Picdir + File.separator + filename);
